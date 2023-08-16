@@ -2,15 +2,10 @@
 import { Database } from '~~/types/database.types'
 
 const supabase = useSupabaseClient<Database>()
-const user = useSupabaseUser()
 
 const { data } = useAsyncData(async () => {
   // const { data } = await supabase.from('test').select('*')
-  const { data } = await supabase.from('pushupers')
-    .select('*')
-    .eq('email', user.value?.email)
-    .single()
-
+  const { data } = await supabase.from('test').select('*')
   return data
 })
 
@@ -19,7 +14,6 @@ const { data: api } = await useFetch('/api/test')
 const signOut = async () => {
   const { error } = await supabase.auth.signOut()
   if (error) console.log(error)
-  return navigateTo('/login')
 }
 </script>
 <template>

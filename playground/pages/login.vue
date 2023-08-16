@@ -1,14 +1,7 @@
 <script setup lang="ts">
 const supabase = useSupabaseClient()
-const user = useSupabaseUser()
-
-watchEffect(() => {
-  // Can be uncommented in next nuxt version when https://github.com/nuxt/nuxt/issues/21841 is fixed
-  if (user.value) {
-    console.log('navigate to / !');
-    // return navigateTo('/')
-  }
-})
+const user = await useSupabaseUser()
+if (user) navigateTo('/')
 
 const signInWithOAuth = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
@@ -49,25 +42,15 @@ const email = ref('')
     "
   >
     <h1>Login</h1>
-    <button @click="signInWithOAuth">
-      Sign In with OAuth (GitHub)
-    </button>
-    <button @click="signIn">
-      Sign In with E-Mail
-    </button>
+    <button @click="signInWithOAuth">Sign In with OAuth (GitHub)</button>
+    <button @click="signIn">Sign In with E-Mail</button>
     <input
       v-model="email"
       type="email"
     />
     <template v-if="user">
-      <NuxtLink to="/">
-        Go to home page
-      </NuxtLink>
-      <button
-        @click="signOut"
-      >
-        Sign Out
-      </button>
+      <NuxtLink to="/"> Go to home page </NuxtLink>
+      <button @click="signOut">Sign Out</button>
     </template>
   </div>
 </template>
