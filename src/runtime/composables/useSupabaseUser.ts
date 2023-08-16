@@ -1,22 +1,15 @@
-import type { User } from '@supabase/supabase-js'
 import { useSupabaseClient } from './useSupabaseClient'
-import { useState } from '#imports'
 
-export const useSupabaseUser = () => {
+export const useSupabaseUser = async () => {
   const supabase = useSupabaseClient()
 
-  const user = useState<User | null>('supabase_user', () => null)
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  // Asyncronous refresh session and ensure user is still logged in
-  supabase?.auth.getSession().then(({ data: { session } }) => {
-    if (session) {
-      if (JSON.stringify(user.value) !== JSON.stringify(session.user)) {
-        user.value = session.user;
-      }
-    } else {
-      user.value = null
-    }
-  })
+  if (!session?.user) {
+    return null
+  }
 
-  return user
+  return session.user
 }
