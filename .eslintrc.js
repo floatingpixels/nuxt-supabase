@@ -1,20 +1,8 @@
 module.exports = {
   root: true,
-  extends: ['@nuxt/eslint-config'],
+  extends: ['@nuxt/eslint-config', 'prettier'],
   rules: {
+    'vue/no-setup-props-destructure': 'off',
     'vue/multi-word-component-names': 'off',
-    'vue/html-self-closing': [
-      'error',
-      {
-        html: {
-          void: 'always',
-          normal: 'never',
-          component: 'always',
-        },
-        svg: 'always',
-        math: 'always',
-      },
-    ],
-    'vue/singleline-html-element-content-newline': 'off',
   },
 }
