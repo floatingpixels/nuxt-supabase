@@ -185,7 +185,7 @@ export default defineNuxtModule<ModuleOptions>({
       nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
         inline: [resolve('./runtime')],
       })
-      nitroConfig.alias['#supabase/server'] = resolveRuntimeModule('./server/services')
+      nitroConfig.alias['#supabase/server'] = resolve(runtimeDir, 'server', 'services')
     })
 
     addTemplate({
